@@ -1,0 +1,36 @@
+		<div ng-controller="CardListCtrl">
+			<form class="well form-search">
+				<label>Title:</label>
+				<input type="text" ng-model="title_search" class="input-medium search-query" placeholder="Keywords...">
+				<label>Description:</label>
+				<input type="text" ng-model="description_search" class="input-medium search-query" placeholder="Keywords...">
+				<button type="submit" class="btn" ng-click="search()">Search</button>
+			</form>	
+			<pre>Found {{totalCount}} cards / Page {{currentPage}} of {{totalPages}}</pre>
+			<div>
+				<pagination ng-change="pageChanged()" num-pages="totalPages" total-items="totalCount" ng-model="currentPage" items-per-page="itemsPerPage" max-size="10" class="pagination-sm" boundary-links="true"></pagination>
+			</div>
+			<div class="table-responsive">    
+				<table class="table table-striped" data-side-pagination="server">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Type</th>
+							<th>Title / Description</th>
+							<th>Year</th>
+						</tr>
+					</thead>	
+					<tbody>
+						<tr ng-repeat="card in cards">
+							<!--
+							<td><a href="" ng-click="openCard({{card}},{{$index}})">{{card.card_number}}</a></td>
+							-->
+							<td><a href="#/cards/{{card.card_id}}">{{card.card_number}}</a></td>
+							<td>{{card.photo_type_id}}</td>
+							<td><a href="#/cards/{{card.card_id}}">{{card.title}} / {{card.description}}</a></td>
+							<td>{{card.decade}} / {{card.year}}</td>
+						</tr>
+					</tbody>  
+				</table>        		  			  
+			</div>				
+		</div>

@@ -1,0 +1,253 @@
+<div ng-controller="CardDetailCtrl">
+	<div class="card-buttons row">
+		<div class="col-md-12">
+			<!--
+			<button type="button" class="btn btn-primary" ng-click="openPreviousCard()" ng-disabled="true">Previous</button>
+			<button type="button" class="btn btn-primary" ng-click="openNextCard()" ng-disabled="true">Next</button>
+			-->
+			<button type="button" class="btn btn-primary" ng-click="openPreviousCard()">Previous</button>
+			<button type="button" class="btn btn-primary" ng-click="openNextCard()">Next</button>
+			<button type="button" class="btn btn-info" ng-click="editCard()">Edit Card</button>
+			<button type="button" class="btn btn-info" ng-click="showLinkPhoto()">Link Photo</button>
+			<button type="button" class="btn btn-info" ng-click="unlinkPhoto()">UnLink Photo</button>
+		</div>
+	</div>	
+	<div>
+	  <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>	 
+	</div>
+	<div class="row">
+	    <div class="col-md-6">		
+      		<div class="panel panel-default">
+				    <div class="panel-heading"><strong>Card nro: {{currentCard.card_number}} ( id:{{currentCard.card_id}} )</strong></div>
+				    <div class="panel-body">
+						<form class=" form-horizontal" role="form">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Card ID</label>
+								<div class="col-sm-8">
+									<p class="form-control-static">{{currentCard.negative_type_code}}.{{currentCard.box_id}}.{{currentCard.section_id}}.{{currentCard.card_number}}.{{currentCard.card_number_totarc}}.{{currentCard.card_number_imalim}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Status</label>
+								<div class="col-sm-8">
+									<p class="form-control-static">{{currentCard.card_status}}</p>
+								</div>
+							</div>	
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Active</label>
+								<div class="col-sm-8">
+									<p class="form-control-static">{{currentCard.active}}</p>
+								</div>
+							</div>																
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Title</label>
+								<div class="col-sm-8">
+									<p class="form-control-static">{{currentCard.title}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Description</label>
+								<div class="col-sm-8">
+									<p class="form-control-static">{{currentCard.description}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Type</label>
+								<div class="col-sm-8">
+									<p class="form-control-static">{{currentCard.photo_type}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Topic - Primary</label>
+								<div class="col-sm-8">
+									<p class="form-control-static"><span ng-repeat="topic in currentCard.primary_topics">{{ topic.description }} | </span></p>
+								</div>
+							</div>	
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Topic - Secondary</label>
+								<div class="col-sm-8">
+									<p class="form-control-static"><span ng-repeat="topic in currentCard.secondary_topics">{{ topic.description }} | </span></p>
+								</div>
+							</div>										
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Year</label>
+								<div class="col-sm-8">
+									<p class="form-control-static" ng-show="currentCard.decade > 0">{{currentCard.decade}}</p><p class="form-control-static"  ng-show="currentCard.year > 0">{{currentCard.year}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Soporte</label>
+								<div class="col-sm-8">
+									<p class="form-control-static">{{currentCard.negative_type}}</p>
+								</div>
+							</div>	
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Category</label>
+								<div class="col-sm-8">
+									<p class="form-control-static">{{currentCard.category}}</p>
+								</div>
+							</div>						
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Obs. Tecnicas</label>
+								<div class="col-sm-8">
+									<p class="form-control-static"><span ng-repeat="observation in currentCard.observations">{{ observation.description }} | </span></p>
+								</div>
+							</div>						
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Formato</label>
+								<div class="col-sm-8">
+									<p class="form-control-static">{{currentCard.format}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Proceso</label>
+								<div class="col-sm-8">
+									<p class="form-control-static">{{currentCard.process}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Film Support</label>
+								<div class="col-sm-8">
+									<p class="form-control-static"><span ng-repeat="support in currentCard.supports">{{ support }} | </span></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Condition</label>
+								<div class="col-sm-8">
+									<p class="form-control-static"><span ng-repeat="condition in currentCard.conditions">{{ condition }} | </span></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">Observations</label>
+								<div class="col-sm-8">
+									<p class="form-control-static">{{currentCard.observation}}</p>
+								</div>
+							</div>	
+							<div class="form-group">
+								<label class="col-sm-4 control-label"># Imagen en Placa</label>
+								<div class="col-sm-8">
+									<p class="form-control-static">{{currentCard.card_sequence_in_negative}} {{currentCard.card_position_in_negative}}</p>
+								</div>
+							</div>	
+						</form>
+				    </div>
+			</div>	
+
+			
+		</div>	
+	    <div class="col-md-6">
+			<div class="table-responsive" ng-show="showFindPhoto">  
+				<div class="panel panel-default">
+					<div class="panel-heading">Link Photo</div>
+					<div class="panel-body">
+						<strong>Filter:</strong> </string>
+						<input type="text" ng-model="filterText" />
+						<button type="button" class="btn btn-info" ng-click="filterPhotoGrid()">Filter</button>  
+						<button type="button" class="btn btn-info" ng-click="linkPhoto()">Add</button>  						
+						<table class="table table-striped" data-side-pagination="server">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Original Name</th>
+									<th>Name</th>
+								</tr>
+							</thead>	
+							<tbody>
+								<tr ng-repeat="photo in photos">
+									<td><input type="checkbox" ng-init="photo.is_selected = false" ng-model="photo.is_selected">{{photo.image_id}}</td>
+									<td>{{photo.original_name}}</td>
+									<td><a href="#/cards/{{card.card_id}}">{{photo.name}}</a></td>
+								</tr>
+							</tbody>  
+						</table>        		  			  
+					</div>
+				</div>
+			</div>
+
+	        <form role="form login">
+	            <div class="form-group">
+            		<div class="panel panel-default" ng-repeat="photo in currentCard.photos">
+					    <div class="panel-heading">
+						    <input type="checkbox" ng-init="photo.sel_for_unlink = false" ng-model="photo.sel_for_unlink"><strong>Photo: {{photo.original_name}}</strong>
+					    </div>
+					    
+					    <div class="panel-body">
+					    	<img border="0" ng-src="{{photo.path}}"></img><br>
+
+					    	<input type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="photo.is_principal">
+					    	<label>Imagen principal?&nbsp&nbsp&nbsp</label>
+					    	<input type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="photo.is_link_valid">
+					    	<label>Pertenece a la ficha?&nbsp&nbsp&nbsp</label>
+					    	<input type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="photo.is_image_valid">
+					    	<label>Escaneado aceptable?</label><br>
+					    	
+					    	<button type="button" class="btn " ng-click="updatePhoto(photo)">Save</button>
+					    </div>
+					</div>	                			
+	            </div>
+	        </form>
+
+
+
+			<accordion close-others="oneAtATime">
+			    <accordion-group heading="Comments" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+					<table class="table table-striped" data-side-pagination="server">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Comment</th>
+								<th>User</th>
+								<th></th>
+							</tr>
+						</thead>	
+						<tbody>
+							<tr ng-repeat="comment in accordionContext.comments">
+								<td>{{comment.create_date | dateToISO | date:'shortDate' }}</td>                	
+								<td>{{comment.comment}}</td>
+								<td>{{comment.create_user}}</td>
+								<td><button type="button" class="btn btn-default btn-sm" ng-click="deleteComment(comment)">Delete</button></td>
+							</tr>
+						</tbody>  
+					</table> 
+
+					<div class="col-sm-12">
+					    <div ng-show="error" class="alert alert-danger">{{error}}</div>
+					    <form name="form" ng-submit="addComment()" role="form">
+					        <div class="form-group">
+					            <label class="col-sm-8" for="username">New Comment</label>
+					            <i class="fa fa-key"></i>
+					            <textarea type="text" name="comment" id="comment" class="form-control" ng-model="accordionContext.newComment" required ng-maxlength="250"></textarea>
+					            <span ng-show="form.comment.$dirty && form.comment.$error.required" class="help-block">New comment is required</span>
+					        </div>
+					        <div class="form-actions">
+					            <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn ">Save Comment</button>
+					        </div>
+					    </form>
+					</div>
+
+			    </accordion-group>
+
+			    <accordion-group heading="History">
+			    
+					<table class="table table-striped" data-side-pagination="server">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Description</th>
+								<th>User</th>
+							</tr>
+						</thead>	
+						<tbody>
+							<tr ng-repeat="entry in currentCard.history">
+								<td>{{entry.create_date | dateToISO | date:'shortDate' }}</td>                	
+								<td>{{entry.description}}</td>
+								<td>{{entry.create_user}}</td>
+							</tr>
+						</tbody>  
+					</table> 			    			      
+			    </accordion-group>
+			  </accordion>	  
+			        
+	    </div>		
+	</div>	
+</div>
